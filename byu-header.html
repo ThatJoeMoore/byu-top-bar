@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`byu-header`
+Standard top bar for BYU pages
+
+@demo demo/index.html 
+-->
+
+<dom-module id="byu-header">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'byu-header',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'byu-header',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
