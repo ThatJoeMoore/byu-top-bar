@@ -1,0 +1,21 @@
+{
+  "name": "byu-shared-styles",
+  "authors": [
+    "Joseph Moore <joseph_moore@byu.edu>"
+  ],
+  "description": "BYU Site shared styles",
+  "main": "byu-shared-styles.html",
+  "license": "Apache-2.0",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.0"
+  }
+}

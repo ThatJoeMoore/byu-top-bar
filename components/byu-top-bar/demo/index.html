@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>byu-header demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+    <link rel="import" href="../byu-top-bar.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+      demo-snippet {
+        width: 100%;
+      }
+      .centered {
+        width: 100%;
+        max-width: 800px;
+      }
+
+      body {
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+  <!--<byu-top-bar org-name="Web Community" search-placeholder="Search Web Community"></byu-top-bar>-->
+  <byu-top-bar org-name="David O. McKay School of Education" search-placeholder="Search School of Education"></byu-top-bar>
+
+    <div class="vertical-section-container centered">
+      <h3>Basic byu-header Demo</h3>
+      <demo-snippet>
+        <template>
+          <byu-top-bar org-name="David O. McKay School of Education" search-placeholder="Search School of Education"></byu-top-bar>
+        </template>
+      </demo-snippet>
+    </div>
+
+  </body>
+</html>
