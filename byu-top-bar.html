@@ -1,0 +1,157 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../byu-shared-styles/byu-shared-styles.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-collapse/iron-collapse.html">
+
+<link rel="import" href="../font-roboto/roboto.html">
+
+<!--
+`byu-header`
+Standard top bar for BYU pages
+
+@demo demo/index.html 
+-->
+
+
+
+<dom-module id="byu-top-bar">
+  <template>
+    <style include="byu-colors">
+      :host {
+        display: block;
+        height: 50px;
+        width: 100%;
+        background-color: var(--byu-dark-blue);
+        color: white;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        padding: 8px;
+        box-sizing: border-box;
+
+        font-family: Roboto, sans-serif;
+      }
+      .orgName {
+        font-size: 18px;
+      }
+      .byu-logo {
+        width: 100px;
+        height: 30px;
+        background-clip: content-box;
+        background-size: cover;
+        background-origin: content-box;
+        background-image: url('img/byu-white.svg');
+        padding: 0.5em;
+        display: inline-block;
+      }
+      .spacer {
+        @apply(--layout-flex);
+      }
+
+      .search {
+        width: 200px;
+        background-color: white;
+        border: none;
+        padding: 4px;
+        border-radius: 3px 0 0 3px;
+        height: 24px;
+      }
+
+      .search::-webkit-input-placeholder {
+        text-align: center;
+      }
+
+      .search:-moz-placeholder { /* Firefox 18- */
+        text-align: center;
+      }
+
+      .search::-moz-placeholder {  /* Firefox 19+ */
+        text-align: center;
+      }
+
+      .search:-ms-input-placeholder {
+        text-align: center;
+      }
+
+      :host.search-opened .search-icon {
+        color: var(--byu-dark-blue);
+        background-color: white;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+
+      .byu-logo-image {
+        width: 100px;
+        margin-right: 8px;
+      }
+      @media (max-width: 600px) {
+        .orgName {
+          font-size: 14px;
+        }
+        :host.search-opened .orgName {
+          display: none;
+        }
+        .byu-logo-image {
+          width: 50px;
+        }
+      }
+      .orgName {
+        -webkit-flex-shrink: 1;
+        flex-shrink: 1;
+      }
+      #searchCollapse {
+        position: absolute;
+        right: 24px;
+        z-index: 10;
+      }
+      .search-container {
+        position: relative;
+      }
+    </style>
+    <!--<span class="byu-logo"></span>-->
+    <img class="byu-logo-image" src="img/byu-white.svg" alt="BYU">
+    <span class="orgName">[[orgName]]</span>
+    <span class="spacer"></span>
+    <div class="search-container">
+      <iron-collapse horizontal id="searchCollapse">
+        <input id="search" class="search" type="search" placeholder$="[[searchPlaceholder]]" on-blur="_searchBlur">
+      </iron-collapse>
+      <iron-icon class="search-icon" icon="search" on-tap="_searchTapped"></iron-icon>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'byu-top-bar',
+
+      properties: {
+        orgName: {
+          type: String,
+          value: 'Brigham Young University',
+        },
+        searchPlaceholder: {
+          type: String,
+          value: 'Search'
+        }
+      },
+
+      _searchTapped: function() {
+        this.toggleClass('search-opened');
+        this.$.searchCollapse.toggle();
+        if (this.classList.contains('search-opened')) {
+          this.async(function() {
+            this.$.search.focus();
+          }, 100);
+        }
+      },
+      _searchBlur: function() {
+//        this.toggleClass('search-opened', false);
+      }
+
+    });
+  </script>
+</dom-module>
