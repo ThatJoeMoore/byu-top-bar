@@ -3,6 +3,14 @@
   "description": "Standard top bar for BYU pages",
   "main": "byu-top-bar.html",
   "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "*.sh",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "byu-shared-styles": "ThatJoeMoore/byu-shared-styles",
