@@ -1,4 +1,4 @@
-# \<byu-top-bar\>
+# \<byu-top-bar\> [![CircleCI](https://circleci.com/gh/ThatJoeMoore/byu-top-bar.svg?style=shield)](https://circleci.com/gh/ThatJoeMoore/byu-top-bar)
 
 Standard top bar for BYU pages
 
