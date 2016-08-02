@@ -18,10 +18,8 @@ deployment:
     branch: master
     commands:
       - mkdir ../pages
-      - git config --global user.email circleci@circleci
-      - git config --global user.name CircleCI
-      - cp ./gh-pages.sh ../pages
-      - chmod u+x ../pages/gh-pages.sh
+      - git config --global user.email circleci@circleci && git config --global user.name CircleCI
+      - cp ./gh-pages.sh ../pages && chmod u+x ../pages/gh-pages.sh
       - cd ../pages && ./gh-pages.sh ThatJoeMoore byu-top-bar
 
 general:
