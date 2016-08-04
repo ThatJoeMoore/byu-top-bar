@@ -7,6 +7,7 @@
 <link rel="import" href="../iron-collapse/iron-collapse.html">
 
 <link rel="import" href="../font-roboto/roboto.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
 
 <!--
 `byu-header`
@@ -14,7 +15,6 @@ Standard top bar for BYU pages
 
 @demo demo/index.html 
 -->
-
 
 
 <dom-module id="byu-top-bar">
@@ -33,9 +33,15 @@ Standard top bar for BYU pages
 
         font-family: Roboto, sans-serif;
       }
+
+      .search-container {
+        @apply(--layout-horizontal);
+      }
+
       .orgName {
         font-size: 18px;
       }
+
       .byu-logo {
         width: 100px;
         height: 30px;
@@ -46,6 +52,7 @@ Standard top bar for BYU pages
         padding: 0.5em;
         display: inline-block;
       }
+
       .spacer {
         @apply(--layout-flex);
       }
@@ -55,7 +62,7 @@ Standard top bar for BYU pages
         background-color: white;
         border: none;
         padding: 4px;
-        border-radius: 3px 0 0 3px;
+        border-radius: 3px;
         height: 24px;
       }
 
@@ -67,7 +74,7 @@ Standard top bar for BYU pages
         text-align: center;
       }
 
-      .search::-moz-placeholder {  /* Firefox 19+ */
+      .search::-moz-placeholder { /* Firefox 19+ */
         text-align: center;
       }
 
@@ -75,37 +82,50 @@ Standard top bar for BYU pages
         text-align: center;
       }
 
-      :host.search-opened .search-icon {
-        color: var(--byu-dark-blue);
-        background-color: white;
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-      }
-
       .byu-logo-image {
         width: 100px;
         margin-right: 8px;
       }
+
+      #searchCollapse {
+        /*This is suuuuuper hacky.  Gotta do a better version, but don't have time right now.*/
+        display: none;
+      }
+
       @media (max-width: 600px) {
         .orgName {
           font-size: 14px;
         }
+
         :host.search-opened .orgName {
           display: none;
         }
+
         .byu-logo-image {
           width: 50px;
         }
+
+        #searchCollapse {
+          /*This is suuuuuper hacky.  Gotta do a better version, but don't have time right now.*/
+          display: block;
+        }
+        #desktopSearch {
+          /*This is suuuuuper hacky.  Gotta do a better version, but don't have time right now.*/
+          display: none;
+        }
       }
+
       .orgName {
         -webkit-flex-shrink: 1;
         flex-shrink: 1;
       }
+
       #searchCollapse {
         position: absolute;
         right: 24px;
         z-index: 10;
       }
+
       .search-container {
         position: relative;
       }
@@ -114,12 +134,20 @@ Standard top bar for BYU pages
     <img class="byu-logo-image" src="img/byu-white.svg" alt="BYU">
     <span class="orgName">[[orgName]]</span>
     <span class="spacer"></span>
-    <div class="search-container">
-      <iron-collapse horizontal id="searchCollapse">
-        <input id="search" class="search" type="search" placeholder$="[[searchPlaceholder]]" on-blur="_searchBlur">
+    <div class="search-container" hidden$="[[noSearch]]">
+
+      <!--This is suuuuuper hacky.  Gotta do a better version, but don't have time right now.-->
+      <iron-collapse horizontal id="searchCollapse" opened="{{searchOpened}}">
+        <input id="mobileSearch" class="search" type="search" placeholder$="[[searchPlaceholder]]" on-blur="_searchBlur">
       </iron-collapse>
+
+      <input id="desktopSearch" class="search" type="search" placeholder$="[[searchPlaceholder]]" on-blur="_searchBlur">
+      <!--END: Terrible hackiness-->
+
       <iron-icon class="search-icon" icon="search" on-tap="_searchTapped"></iron-icon>
     </div>
+
+    <!--<content select="[slot=menu]"></content>-->
 
   </template>
 
@@ -136,20 +164,25 @@ Standard top bar for BYU pages
         searchPlaceholder: {
           type: String,
           value: 'Search'
+        },
+        noSearch: {
+          type: Boolean,
+          value: false
         }
       },
 
-      _searchTapped: function() {
-        this.toggleClass('search-opened');
-        this.$.searchCollapse.toggle();
-        if (this.classList.contains('search-opened')) {
-          this.async(function() {
-            this.$.search.focus();
-          }, 100);
-        }
+      observers: [
+        '_applySearchClass(noSearch, searchOpened)'
+      ],
+
+      _searchTapped: function () {
+        this.searchOpened = !this.searchOpened;
       },
-      _searchBlur: function() {
+      _searchBlur: function () {
 //        this.toggleClass('search-opened', false);
+      },
+      _applySearchClass: function (noSearch, searchOpened) {
+        this.toggleClass('search-opened', !noSearch && searchOpened);
       }
 
     });
